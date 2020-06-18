@@ -1,46 +1,74 @@
-import java.io.FileInputStream;
+import javax.swing.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+
+
 
 public class LeArquivo {
 
     public static void main(String[] args) {
 
-        try { //começa tratamento de excessão
 
-            String arquivo = "/home/nicolas/entrada";  //as barras estão assim pq uso linux
 
-            StringBuffer conteudo = new StringBuffer(""); //armazena cada caractere do arquivo
+            String Caminho = "/home/nicolas/entrada";
 
-            FileInputStream fi = new FileInputStream(arquivo); //cria um objeto que define o
-            //arquivo que vai ler ----->  fi
+            try { //começa tratamento de excessão
+                ListaLigada lista = new ListaLigada();
 
-            int c; //vai receber o byte do arquivo
-            ListaLigada lista = new ListaLigada();
+                //as barras estão assim pq uso linux
 
-            while ((c = fi.read()) != -1) //o -1 indica o fim do arquivo
-            //o read está trabalhando com byte, então pode importar qualquer extenção de
-            //arquivo, até mesmo com imagem
+                FileReader arq = new FileReader(Caminho);
+                BufferedReader lerArq  = new BufferedReader(arq);
+                String linha = " ";
+                try{
+                    linha = lerArq.readLine();
+                    while (linha != null) {
+                        lista.insertLast(new DNode (linha));
+                        System.out.println(linha);
+                        linha = lerArq.readLine();
+                    }
+                    arq.close();
+                    lista.show();
+                    lista.getFirst();
+
+                    lista.removeFirst();
+                    lista.removeFirst();
+                    lista.removeFirst();
+
+                    lista.show();
+                } catch (IOException ex) {
+
+                }
+
+
+            } catch (FileNotFoundException e1) {
+                System.out.println("Não achou o arquivo arquivo");
+            } catch (Exception e2)  //Exceção caso não funcione
             {
-                conteudo.append((char) c);
-
+                System.out.println("Erro no tratamento do arquivo");
             }
 
-            System.out.println("Conteudo do Arquivo:\n" + conteudo);
-            lista.insertLast(new DNode(conteudo));
-
-            fi.close();
-            lista.show();
-
-        } catch (FileNotFoundException e1) {
-            System.out.println("Não achou o arquivo arquivo");
-        } catch (Exception e2)  //Exceção caso não funcione
-        {
-            System.out.println("Erro no tratamento do arquivo");
-        }
-
-
-
-
     }
+
+
 }
+
+
+
+
+
+
+
+
+

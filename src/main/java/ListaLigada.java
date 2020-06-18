@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
+
 public class ListaLigada {
 
     protected DNode head; //node cabeça da lista
@@ -13,8 +14,28 @@ public class ListaLigada {
         tail = null;
         size = 0;
     }
+
+    public class UnderflowException extends Exception {
+        public String toString() {
+            return "UNDERFLOW!";
+        }
+    }
     public boolean isEmpty() {
         return head == null;
+    }
+
+    public DNode getFirst() throws UnderflowException {
+        if (isEmpty()) {
+            throw new UnderflowException();
+        }
+        System.out.println(head.getElement().toString() );
+        return head;
+    }
+    public DNode getLast() throws UnderflowException {
+        if (isEmpty()) {
+            throw new UnderflowException();
+        }
+        return tail;
     }
 
     public void insertFirst(DNode novoNode) {
@@ -41,6 +62,22 @@ public class ListaLigada {
         }
     }
 
+    public DNode removeFirst()  {
+        if (isEmpty()) {
+            System.out.println("Lista vazia");
+        }
+        DNode removedItem = head;
+        if (head == tail) {
+            head = tail = null;
+        } else {
+            head.getNext().setPrevious(null);
+            head = head.getNext();
+        }
+        size--;
+        System.out.println("removido");
+        return removedItem;
+    }
+
     public void show () {
         if (isEmpty()) {
             System.out.println("Lista vazia!");
@@ -54,6 +91,8 @@ public class ListaLigada {
             System.out.println("\n");
         }
     }
+
+
 
 
 }
